@@ -2,7 +2,7 @@
 
 This demonstrates how to use Lucee to build MVC web applications.
 
-Other than the latest verion of Lucee (6), this approach uses no dependencies such framworks of libraries.
+Other than the latest verion of Lucee (6), this approach uses no dependencies such as framworks of libraries.
 
 With minimal vanilla Javascript (in essence of <a href="https://htmx.org/">HTMX</a>), this boilerplate provides a template to build you own apps with Lucee... apps that can serve hundreds of thousands of users.
 
