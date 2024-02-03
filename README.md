@@ -2,7 +2,7 @@
 
 This demonstrates how to use Lucee to build MVC web applications.
 
-Other than the latest verion of Lucee (6), this approach uses no dependencies such a framworks of librarys.
+Other than the latest verion of Lucee (6), this approach uses no dependencies such framworks of libraries.
 
 With minimal vanilla Javascript (in essence of <a href="https://htmx.org/">HTMX</a>), this boilerplate provides a template to build you own apps with Lucee... apps that can serve hundreds of thousands of users.
 
@@ -23,7 +23,7 @@ The boilerplate doesn't do much, but it does demonstrate a few important fundame
 
 6. How to validate forms.
 
-7. How to use a slide-out model for forms or navigation.
+7. How to use a slide-out modal for forms or navigation.
 
 
 ## How is deployed?
