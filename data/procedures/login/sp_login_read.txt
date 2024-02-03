@@ -1,0 +1,149 @@
+drop procedure db_app.sp_login_read;
+delimiter $$
+create procedure db_app.sp_login_read(
+_utoken char(20)
+)
+BEGIN
+declare _account char(24);
+declare _user char(24);
+declare _accountname varchar(50);
+declare _country char(2);
+declare _timezone varchar(30);
+declare _paymentmethod varchar(32);
+declare _created datetime;
+declare _status varchar(20);
+declare _customer varchar(32);
+
+declare _email varchar(50);
+declare _fname varchar(50);
+declare _mname varchar(50);
+declare _lname varchar(50);
+declare _crangeid tinyint;
+declare _frangeid tinyint;
+declare _isprimary boolean;
+declare _now datetime;
+declare _access char(24);
+declare _daysleft tinyint;
+
+declare _due decimal(9,2);
+declare _paid decimal(9,2);
+declare _plan varchar(32);
+declare _plan_name varchar(50);
+declare _invoicecount int;
+declare _balancedue decimal(9,2);
+declare _connected tinyint;
+
+select account, user
+into _account, _user
+from db_data.logins
+where id = _utoken;
+
+
+select name, country, timezone, customer, paymentmethod, created, plan
+into _accountname, _country, _timezone, _customer, _paymentmethod, _created, _plan
+from db_data.accounts
+where id = _account;
+
+set _paymentmethod = coalesce(_paymentmethod,'');
+set _plan = coalesce(_plan,'');
+
+
+select email, fname, mname, lname, crangeid, frangeid, isprimary, access
+into _email, _fname, _mname, _lname, _crangeid, _frangeid, _isprimary, _access
+from db_data.users
+where account = _account
+and id = _user;
+
+
+
+set _now = fn_now(_timezone);
+set _connected = 0;
+set _daysleft = 0;
+
+
+
+select count(id) into _invoicecount
+from db_data.invoices
+where customer = _customer;
+
+
+select sum(amount_due), sum(amount_paid)
+into _due, _paid
+from db_data.invoices
+where customer = _customer;
+set _due = coalesce(_due,0);
+set _paid = coalesce(_paid,0);
+
+if _due <= _paid then
+  set _balancedue = 0;
+else
+  set _balancedue = _due - _paid;
+end if;
+
+
+
+if datediff( date(fn_now(_timezone)), date(_created) ) <= 7 then
+  set _daysleft = 7 - (datediff( date(fn_now(_timezone)), date(_created) ));
+  set _status = concat(_daysleft,' Trial Days Left');
+  select count(id) into _connected from db_data.events where account = _account and type = 'addcompany';
+end if;
+
+if _invoicecount > 0 then
+  if _balancedue = 0 then
+    set _status = "ACTIVE";
+  else
+    set _status = "BALANCE DUE"; 
+  end if;
+end if;
+
+
+
+
+select plan_name into _plan_name
+from db_data.plans
+where id = _plan;
+set _plan_name = coalesce(_plan_name,'Trial');
+
+if _plan_name = 'Trial' and _daysleft = 0 then
+  select count(id) into _connected from db_data.events where account = _account and type = 'addcompany';
+  set _status = "Please Enter Card";
+elseif _plan_name = 'Trial' and _daysleft > 0 then
+  set _status = concat(_daysleft,' Trial Days Left');
+end if;
+
+
+
+if length(_account) = 24 then
+
+select
+_status as status,
+_daysleft as daysleft,
+_plan as plan,
+_account as account,
+_customer as customer,
+_user as user,
+_accountname as accountname,
+_timezone as timezone,
+_email as email,
+_fname as fname,
+_mname as mname,
+_lname as lname,
+_crangeid as crangeid,
+_frangeid as frangeid,
+_isprimary as isprimary,
+_access as access,
+_now as now,
+_connected as connected;
+
+else
+
+select 1 from dual where false;
+
+end if;
+
+
+
+END $$
+delimiter ;
+
+call db_app.sp_login_read('DtqX84vST0b2MeD4iOov');

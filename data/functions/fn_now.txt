@@ -1,0 +1,18 @@
+drop function db_app.fn_now;
+delimiter $$
+create function db_app.fn_now(
+_timezone varchar(20)
+)
+returns varchar(30)
+deterministic
+begin
+declare _now datetime;
+
+set _now =  convert_tz(now(),'Etc/UTC',_timezone);
+
+return _now;
+end $$
+delimiter ;
+
+select db_app.fn_now("America/Los_Angeles");
+

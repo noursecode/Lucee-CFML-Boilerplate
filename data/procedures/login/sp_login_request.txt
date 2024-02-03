@@ -1,0 +1,38 @@
+drop procedure sp_login_request;
+delimiter $$
+create procedure sp_login_request(
+_email varchar(50),
+_clientip varchar(40)
+)
+BEGIN
+declare _request char(20);
+declare _authcode int;
+declare _account char(24);
+declare _user char(24);
+declare _fname varchar(40);
+
+select id, account, fname
+into _user, _account, _fname
+from db_data.users
+where email = _email;
+set _user = coalesce(_user,"");
+
+set _request = fn_id();
+set _authcode = fn_code();
+
+delete from db_data.requests where authcode = _authcode;
+
+insert into db_data.requests(id,authcode,account,user,clientip,created)
+values(_request,_authcode,_account,_user,_clientip,now());
+
+select _email as email, _authcode as authcode, _fname as fname;
+
+END $$
+delimiter ;
+
+call sp_login_request('b@b.com','1.1.1.1');
+
+select * from db_data.requests;
+delete from db_data.requests;
+
+

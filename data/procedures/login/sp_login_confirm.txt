@@ -1,0 +1,51 @@
+drop procedure sp_login_confirm;
+delimiter $$
+create procedure sp_login_confirm(
+_authcode int,
+_clientip varchar(40)
+)
+BEGIN
+declare _account char(24);
+declare _user char(24);
+
+declare _token char(20);
+declare _planid tinyint;
+declare _accountname varchar(80);
+
+
+select account, user into _account, _user
+from db_data.requests
+where authcode = _authcode
+and clientip = _clientip
+and date_add(created, interval 10 minute) >= now()
+and iscompleted = 0;
+set _user = coalesce(_user,"");
+
+
+if length(_user) = 24 then
+
+  set _token = fn_id();
+
+  delete from db_data.logins where user = _user;
+
+  insert into db_data.logins(id,account,user,created)
+  values(_token,_account,_user,now());
+
+
+  delete from db_data.requests where user = _user;
+  delete from db_data.resets where user = _user;
+
+  select _token as token;
+
+else
+  select 1 from dual where false;
+
+end if;
+
+
+END $$
+delimiter ;
+
+call sp_login_confirm('777259','1.1.1.1');
+select * from db_data.logins;
+

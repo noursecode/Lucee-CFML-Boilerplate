@@ -1,0 +1,42 @@
+
+drop table db_data.users;
+CREATE TABLE db_data.users
+(
+id char(24) binary not null primary key,
+account char(24),
+email varchar(50),
+fname varchar(40),
+mname varchar(40),
+lname varchar(40),
+clientip varchar(40),
+created datetime,
+INDEX(customer)
+);
+
+
+drop table db_data.requests;
+CREATE TABLE db_data.requests
+(
+id char(20) binary not null primary key,
+authcode int,
+account char(24),
+user char(24),
+clientip varchar(40),
+created datetime,
+iscompleted boolean default 0,
+INDEX(authcode),
+INDEX(user)
+);
+
+
+drop table db_data.resets;
+CREATE TABLE db_data.resets
+(
+id char(20) binary not null primary key,
+account char(24),
+user char(24),
+clientip varchar(40),
+created datetime,
+iscompleted boolean default 0,
+INDEX(user)
+);

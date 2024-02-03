@@ -1,0 +1,142 @@
+.drawer {
+	display: none;
+	}
+
+.drawer_header{
+	display:flex;
+	height:50px;
+	background-color: #fff;
+	border-bottom:1px solid #ededed;
+	}
+	
+.drawer_hdleft{
+	flex:0 0 64px;
+	padding-top:10px;
+	text-align: center;
+	}
+
+.drawer_title{
+	flex:1 1 auto;
+	display:block;
+	line-height: 50px;
+	font-size: 21px;
+	text-align: center;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	}
+	
+.drawer_hdright{
+	flex:0 0 64px;
+	padding-top:10px;
+	text-align: center;
+	}	
+	
+.drawer_close {
+	margin: 0;
+	padding: 0;
+	border: 1px solid #ffffff;
+	background-color: #ffffff;
+	cursor: pointer;
+	width: 30px;
+	height: 30px;
+	background-image: url('../svg/drawer-close.svg');
+	background-repeat: no-repeat;
+	background-position: left center;
+	vertical-align: top;
+	border-radius: 5px;
+	}
+
+.drawer_back {
+	margin: 0;
+	padding: 0;
+	border: 1px solid #ffffff;
+	background-color: #ffffff;
+	cursor: pointer;
+	width: 30px;
+	height: 30px;
+	background-image: url('../svg/drawer-back.svg');
+	background-repeat: no-repeat;
+	background-position: left center;
+	vertical-align: top;
+	border-radius: 5px;
+	}
+
+.drawer_right {
+	margin: 0;
+	padding: 0;
+	border: 1px solid #ffffff;
+	background-color: #ffffff;
+	cursor: pointer;
+	width: 30px;
+	height: 30px;
+	background-image: url('../svg/drawer-right.svg');
+	background-repeat: no-repeat;
+	background-position: left center;
+	vertical-align: top;
+	border-radius: 5px;
+	}
+
+
+.drawer_back:hover, .drawer_close:hover, .drawer_right:hover {
+	border: 1px solid #a1aab2;
+	}
+
+.drawer_body {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	height: 100%;
+	width: 100%;
+	max-width: 500px;
+	z-index: 9999;
+	overflow: auto;
+	transition: transform 0.3s;
+	background-color: #fff;
+	display: flex;
+	flex-direction: column;
+	-webkit-transform: translateX(103%);
+	transform: translateX(103%);
+	-webkit-overflow-scrolling: touch;
+	box-shadow: 0 2px 6px #777;
+	}
+
+.drawer_main {
+	position: relative;
+	overflow-x: hidden;
+	overflow-y: auto;
+	height: 100%;
+	flex-grow: 1;
+	padding: 20px;
+	}
+
+.drawer.isactive {
+	display: block;
+	}
+
+.drawer.isvisible .drawer_body {
+	-webkit-transform: translateX(0);
+	transform: translateX(0);
+	}
+
+.drawer.isvisible .drawer_modal {
+	opacity: 0.30;
+	}
+
+.drawer_modal {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	z-index: 200;
+	opacity: 0;
+	transition: opacity 0.3s;
+	background-color: #999;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	}

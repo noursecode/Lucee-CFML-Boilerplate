@@ -1,0 +1,17 @@
+drop function db_app.fn_code;
+delimiter $$
+create function db_app.fn_code()
+RETURNS char(6)
+deterministic
+BEGIN
+declare _result char(6);
+
+set _result = floor(rand() * (999999 - 100000) +1) + 100000;
+
+return _result;
+
+END $$
+delimiter ;
+
+select db_app.fn_code();
+

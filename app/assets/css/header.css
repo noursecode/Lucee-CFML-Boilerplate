@@ -1,0 +1,70 @@
+header{
+	flex:0 0 60px;
+	display:flex;
+	height:60px;
+	background-color: var(--white);
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 10;
+	}
+
+.head_lt{
+	flex:1 1 auto;
+	display:flex;
+	padding-left:24px;
+	font-size: 14px;
+	min-width: 150px;
+	}
+.head_rt{
+	flex:0 0 auto;
+	font-size: 14px;
+	padding-right: 10px;
+	line-height: 60px;
+	min-width: 150px;
+	text-align: right;
+	}
+
+.head_logo{
+	display:block;
+	height:45px;
+	width:130px;
+	transition: 0.3s;
+	padding-top: 7px;
+	}
+
+.head_company{
+	display:inline-block;
+	padding-left: 16px;
+	line-height: 60px;
+	}
+	
+.head_menu{
+	display:inline-block;
+	line-height: 60px;
+	font-size: 16px;
+	padding:0 8px;
+	font-weight:700;
+	}
+
+.head_rt div{
+	display:inline-block;
+	line-height: 30px;
+	padding:0 20px;
+	border-bottom: 1px solid #3D4D62;
+	user-select: none;
+	}
+.head_rt a{
+	display:inline-block;
+	line-height: 30px;
+	padding:0 16px;
+	border-bottom: 1px solid var(--white);
+	}
+	
+.head_rt a:hover{
+	border-bottom: 1px solid #CECED0;
+	}
+
+.head_rt a.selected{
+	border-bottom: 1px solid #a1aab2;
+	}
