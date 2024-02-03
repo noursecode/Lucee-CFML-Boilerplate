@@ -11,7 +11,7 @@ With minimal vanilla Javascript (in essence of <a href="https://htmx.org/">HTMX<
 
 The boilerplate doesn't do much, but it does demonstrate a few important fundamentals.
 
-1. How configure your Application.cfc
+1. How to configure your Application.cfc
 
 2. How to create routes using the index.cfm file
 
